@@ -6,16 +6,18 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-contact-list',
   standalone: true,
   imports: [
     TableComponent,
     MatButtonModule,
-    // ReactiveFormsModule,
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    FormsModule
   ],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css'
@@ -28,6 +30,8 @@ export class ContactListComponent implements OnInit {
 
   page:number = 1;
   total:number = 10;
+
+  searchInputValue: string = '';
 
   constructor(
     private _apiService: ApiService,
@@ -47,5 +51,29 @@ export class ContactListComponent implements OnInit {
 
   navigateToAddContct(){
     this._router.navigate(['contacts/add'])
+  }
+
+  onKeyUp(event: KeyboardEvent): void {
+    const searchText = (event.target as HTMLInputElement).value.trim();
+    console.log(searchText);
+    this.searchContact(searchText);
+  }
+  
+  searchContact(searchValue: string){
+    const params = {
+      name: searchValue,
+      email: searchValue,
+      city: searchValue,
+    };
+  
+    this._apiService.searchContact(params).subscribe(res => {
+      console.log(res);
+      this.contactData = res.data;
+    });
+  }
+  
+
+  updateTable(){
+
   }
 }

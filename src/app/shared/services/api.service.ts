@@ -65,4 +65,14 @@ export class ApiService {
     let tokenPayload = this._jwtService.decodeToken(token);
     console.log(tokenPayload)
   }
+
+  searchContact(params: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  
+    return this.http.get(`${this.baseUrl}${this.contactEndpoint}/search`, { headers, params });
+  }
+  
 }
