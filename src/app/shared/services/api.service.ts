@@ -5,6 +5,7 @@ import { LoginModel } from '../models/login.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ContactModel } from '../models/contact.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,15 @@ export class ApiService {
         return throwError(() => new Error('An error occurred while logging in.'));
       })
     );
+  }
+
+  createContact(contact: ContactModel): Observable<any> {
+    const token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.post(`${this.baseUrl}${this.contactEndpoint}`, contact, {headers:headers})
   }
 
   getContacts(): Observable<any>{
