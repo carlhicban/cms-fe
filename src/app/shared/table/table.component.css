@@ -7,3 +7,12 @@
     width: 100%;
     margin-bottom: 16px;
 }
+
+mat-card {
+    padding: 20px;
+}
+
+mat-card-title{
+    text-align: center;
+    margin: 1rem;
+}

@@ -1,1 +1,11 @@
-<p>contact-list works!</p>
+<div class="container">
+    <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput formControlName="search" placeholder="search contact">
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="btn-add-contact" (click)="navigateToAddContct()">
+        Add Contact
+    </button>
+    <app-table [tableDataColumns]="contactDataColumns" [tableDisplayColumns]="contactDisplayColumns"
+        [tableData]="contactData" [totalData]="totalContactData" (pageNumber)="pageNumberChange($event)"></app-table>
+</div>
