@@ -16,4 +16,19 @@ mat-card-title{
     text-align: center;
     margin: 1rem;
 }
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.register {
+    cursor: pointer;
+    opacity: .7;
+}
+
+.register:hover{
+    opacity: 1;
+}
   

@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './core/login/login.component';
+import { RegisterComponent } from './core/register/register.component';
+import { ContactFormComponent } from './core/contact-form/contact-form.component';
+import { AuthGuard } from './shared/services/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'signin', pathMatch: 'full'},
-    
     { path: 'signin', component: LoginComponent},
-    { path: 'register', component: RegisterComponent}
+    { path: 'register', component: RegisterComponent},
+    { path: 'contacts', component: ContactFormComponent,  canActivate: [AuthGuard] }
 ];

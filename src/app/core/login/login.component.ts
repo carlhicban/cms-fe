@@ -4,8 +4,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { ApiService } from '../services/api.service';
-
+import { ApiService } from '../../shared/services/api.service';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -24,9 +25,11 @@ export class LoginComponent {
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   });
+  errorMessage: string = '';
 
   constructor(
-    private _apiService: ApiService
+    private _apiService: ApiService,
+    private _router: Router
   ){}
 
   onSubmit() {
@@ -35,9 +38,21 @@ export class LoginComponent {
         username: this.loginForm.value.username!,
         password: this.loginForm.value.password!
       }
-      this._apiService.login(userData).subscribe(res=>{
-        console.log(res)
-      })
+      this._apiService.login(userData).pipe(
+        catchError((error) => {
+          this.errorMessage = error.message; // Display the error message in the template
+          throw error;
+        })
+      ).subscribe(res => {
+        const token = res.access_token
+        console.log(res.access_token);
+        this._apiService.authenticateToken(token)
+        this._router.navigate(['contacts'])
+      });
     }
+  }
+
+  navigateToRegiter(){
+    this._router.navigate(['register'])
   }
 }
