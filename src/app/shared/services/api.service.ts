@@ -32,6 +32,17 @@ export class ApiService {
     );
   }
 
+  register(user: LoginModel): Observable<any> {
+    return this.http.post(`${this.baseUrl}${this.authEndpoint}/signup`, user).pipe(
+      catchError((error) => {
+        if (error.status === 400) {
+          return throwError(() => new Error('Username already exist.'));
+        }
+        return throwError(() => new Error('An error occurred while logging in.'));
+      })
+    );
+  }
+
   createContact(contact: ContactModel): Observable<any> {
     const token = localStorage.getItem('token')
     const headers = new HttpHeaders({

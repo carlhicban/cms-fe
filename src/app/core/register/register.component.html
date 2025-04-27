@@ -1,0 +1,35 @@
+<div class="register-container">
+    <mat-card>
+        <mat-card-title>Register</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" placeholder="Enter your username">
+                    @if (registerForm.get('username')?.hasError('required')) {
+                    <mat-error>Username is required</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password" placeholder="Enter your password">
+                    @if (registerForm.get('password')?.hasError('required')) {
+                    <mat-error>Password is required</mat-error>
+                    }
+                </mat-form-field>
+                @if(errorMessage){
+                <div class="error-message">
+                    <p>{{ errorMessage }}</p>
+                </div>
+                }
+                <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid"
+                    class="full-width">
+                    register
+                </button>
+
+                <small>Already have an account? <u class="register" (click)="navigateToSigin()">Signin</u></small>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

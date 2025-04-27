@@ -1,0 +1,34 @@
+.register-container {
+    max-width: 400px;
+    margin: 100px auto;
+}
+  
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+mat-card {
+    padding: 20px;
+}
+
+mat-card-title{
+    text-align: center;
+    margin: 1rem;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.register {
+    cursor: pointer;
+    opacity: .7;
+}
+
+.register:hover{
+    opacity: 1;
+}
+  
