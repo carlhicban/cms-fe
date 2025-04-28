@@ -1,5 +1,5 @@
 
-# Angular Application
+# Contacts Management Application
 
 This is an Contacts Management application. Follow the instructions below to run the app locally.
 
