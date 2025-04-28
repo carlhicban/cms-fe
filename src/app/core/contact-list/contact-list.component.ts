@@ -8,6 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @Component({
   selector: 'app-contact-list',
   standalone: true,
@@ -17,63 +21,104 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css'
 })
 export class ContactListComponent implements OnInit {
-  contactData:any = []
-  contactDataColumns:any = ['name','title', 'email', 'address', 'city','phone'];
-  contactDisplayColumns:any = ['name','title', 'email', 'address', 'city', 'phone'];
-  totalContactData!:number;
+  contactData: any = [];
+  contactDataColumns: any = ['name', 'title', 'email', 'address', 'city', 'phone'];
+  contactDisplayColumns: any = ['name', 'title', 'email', 'address', 'city', 'phone'];
+  totalContactData!: number;
 
-  page:number = 1;
-  total:number = 10;
+  page: number = 1;
+  total: number = 10;
 
   searchInputValue: string = '';
+  sortBy: string = 'name';
+  orderBy: string = 'asc';
+  createdAt: any;
 
   constructor(
     private _apiService: ApiService,
     private _router: Router
-  ){}
+  ) {}
 
   ngOnInit(): void {
-    this._apiService.getContacts().subscribe(res=>{
-      console.log(res)
-      this.contactData = res
-      this.totalContactData = res.length
-    })
+    this.getContact();
   }
 
-  pageNumberChange(page:number){
+  getContact() {
+    this._apiService.getContacts().subscribe((res) => {
+      console.log(res);
+      this.contactData = res;
+      this.totalContactData = res.length;
+    });
   }
 
-  navigateToAddContct(){
-    this._router.navigate(['contacts/add'])
+  pageNumberChange(page: number) {
+    console.log(page)
+  }
+
+  navigateToAddContct() {
+    this._router.navigate(['contacts/add']);
   }
 
   onKeyUp(event: KeyboardEvent): void {
-    const searchText = (event.target as HTMLInputElement).value.trim();
-    console.log(searchText);
-    this.searchContact(searchText);
+    this.searchInputValue = (event.target as HTMLInputElement).value.trim();
+    console.log(this.searchInputValue);
+
+    if (this.searchInputValue === '') {
+      this.createdAt = null;
+      this.getContact();
+    } else {
+      this.searchContact();
+    }
   }
-  
-  searchContact(searchValue: string){
-    const params = {
-      name: searchValue,
-      email: searchValue,
-      city: searchValue,
-    };
-  
-    this._apiService.searchContact(params).subscribe(res => {
-      console.log(res);
+
+  sortDataBy() {
+    this.searchContact();
+  }
+
+  sortOrderBy() {
+    this.searchContact();
+  }
+
+  onDateChange(event: any) {
+    console.log('Date selected:', event.value); 
+    this.createdAt = event.value;
+    this.searchContact();
+  }
+
+
+  searchContact() {
+    const params: any = {};
+
+    if (this.searchInputValue) {
+      params.name = this.searchInputValue;
+      params.email = this.searchInputValue;
+      params.city = this.searchInputValue;
+    }
+
+    if (this.sortBy) {
+      params.sortBy = this.sortBy;
+    }
+
+    if (this.orderBy) {
+      params.sortOrder = this.orderBy;
+    }
+
+    if (this.createdAt) {
+      params.createdAfter = new Date(this.createdAt).toISOString();
+    }
+
+    this._apiService.searchContact(params).subscribe((res) => {
       this.contactData = res.data;
     });
   }
-  
 
-  updateTable(){
-
-  }
 }

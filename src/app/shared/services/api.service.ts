@@ -71,8 +71,16 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
+    
+    const cleanParams: any = {};
+    for (const key in params) {
+      if (params[key] !== undefined && params[key] !== null && params[key] !== '') {
+        cleanParams[key] = params[key];
+      }
+    }
   
-    return this.http.get(`${this.baseUrl}${this.contactEndpoint}/search`, { headers, params });
+    return this.http.get(`${this.baseUrl}${this.contactEndpoint}/search`, { headers, params: cleanParams });
   }
+  
   
 }
