@@ -7,3 +7,11 @@
     width: 100%;
     margin-bottom: 16px;
 }
+
+.filters mat-form-field{
+    margin-right: 10px;
+}
+
+.filters button{
+    margin-right: 10px;
+}

@@ -62,6 +62,15 @@ export class ContactListComponent implements OnInit {
 
   pageNumberChange(page: number) {
     console.log(page)
+    this.page = page
+
+    this.searchContact()
+  }
+
+  pageSizeChange(pageSize: number) {
+    this.total = pageSize
+
+    this.searchContact()
   }
 
   navigateToAddContct() {
@@ -116,9 +125,15 @@ export class ContactListComponent implements OnInit {
       params.createdAfter = new Date(this.createdAt).toISOString();
     }
 
+    params.page = this.page;  
+    params.limit = this.total;
+
     this._apiService.searchContact(params).subscribe((res) => {
       this.contactData = res.data;
     });
   }
 
+  logout(){
+    this._apiService.logout()
+  }
 }

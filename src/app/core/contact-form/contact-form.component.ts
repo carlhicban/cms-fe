@@ -11,11 +11,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiService } from '../../shared/services/api.service';
 import { Router } from '@angular/router';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact-form',
@@ -68,20 +64,20 @@ export class ContactFormComponent {
         city: this.contactForm.value.city!
       }
       this._apiService.createContact(contactData).subscribe(res=>{
-        
-        // openSnackBar() {
-          this._snackBar.open('New Contact Saved!', '', {
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            duration: 2000
-          });
-        // }
-      
+        this.openSnackBar()
         if(res) this._router.navigate(['contacts']);
       })
     } else {
       this.errorMessage = 'Please fill out all fields correctly.';
     }
+  }
+
+  openSnackBar(){
+    this._snackBar.open('New Contact Saved!', '', {
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      duration: 2000
+    });
   }
 
   navigateToLogin() {

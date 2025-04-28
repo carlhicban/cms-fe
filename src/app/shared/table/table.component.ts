@@ -26,6 +26,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() subTableDisplayColumns: any;
   @Input() totalData: any;
   @Output() pageNumber = new EventEmitter<any>()
+  @Output() pageSize = new EventEmitter<any>()
   
   displayedColumns!: string[];
   subTitleDisplayedColumns!: string[];
@@ -36,6 +37,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   selectedPage!: number;
   isNextPage!: boolean;
   isPrevPage!: boolean;
+  initialPageSize = 10
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -51,6 +53,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
 
   updateTableData(){
     this.dataSource = new MatTableDataSource(this.tableData);
+    
     this.displayedColumns = this.tableDisplayColumns;
     this.dataColumns = this.tableDataColumns;
     this.subTitleDisplayedColumns = this.subTableDisplayColumns;
@@ -93,7 +96,9 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   changePage(event: any){
+    console.log(event)
     const pageNumber = event.pageIndex + 1
     this.pageNumber.emit(pageNumber)
+    this.pageSize.emit(event.pageSize)
   }
 }

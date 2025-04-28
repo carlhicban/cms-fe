@@ -6,6 +6,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ContactModel } from '../models/contact.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private _jwtService: JwtHelperService,
+    private _router: Router
   ) {}
 
   login(user: LoginModel): Observable<any> {
@@ -71,7 +73,7 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    
+
     const cleanParams: any = {};
     for (const key in params) {
       if (params[key] !== undefined && params[key] !== null && params[key] !== '') {
@@ -82,5 +84,8 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}${this.contactEndpoint}/search`, { headers, params: cleanParams });
   }
   
-  
+  logout(){
+    localStorage.clear()
+    this._router.navigate(['signin'])
+  }
 }
