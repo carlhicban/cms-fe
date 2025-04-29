@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TableComponent } from '../../shared/table/table.component';
 import { ApiService } from '../../shared/services/api.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-contact-list',
   standalone: true,
@@ -31,8 +31,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 })
 export class ContactListComponent implements OnInit {
   contactData: any = [];
-  contactDataColumns: any = ['name', 'title', 'email', 'address', 'city', 'phone'];
-  contactDisplayColumns: any = ['name', 'title', 'email', 'address', 'city', 'phone'];
+  contactDataColumns: any = ['name', 'title', 'email', 'address', 'city', 'phone', ''];
+  contactDisplayColumns: any = ['name', 'title', 'email', 'address', 'city', 'phone','actions'];
   totalContactData!: number;
 
   page: number = 1;
@@ -42,6 +42,9 @@ export class ContactListComponent implements OnInit {
   sortBy: string = 'name';
   orderBy: string = 'asc';
   createdAt: any;
+
+  
+  private _snackBar = inject(MatSnackBar)
 
   constructor(
     private _apiService: ApiService,
@@ -135,5 +138,21 @@ export class ContactListComponent implements OnInit {
 
   logout(){
     this._apiService.logout()
+  }
+
+  deleteContact(id:string){
+    const contactId = id
+    this._apiService.deleteContact(contactId).subscribe(res =>{
+      this.openSnackBar('Contact Deleted!')
+      window.location.reload()
+    })
+  }
+
+  openSnackBar(title:string){
+    this._snackBar.open(`${title}`, '', {
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      duration: 2000
+    });
   }
 }

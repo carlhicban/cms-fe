@@ -3,7 +3,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatButtonModule } from '@angular/material/button';
+import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -12,7 +13,8 @@ import { MatCardModule } from '@angular/material/card';
     MatPaginatorModule,
     MatPaginator,
     CommonModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
@@ -27,6 +29,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() totalData: any;
   @Output() pageNumber = new EventEmitter<any>()
   @Output() pageSize = new EventEmitter<any>()
+  @Output() deleteContact = new EventEmitter<any>()
   
   displayedColumns!: string[];
   subTitleDisplayedColumns!: string[];
@@ -40,6 +43,10 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   initialPageSize = 10
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(
+    private _apiService: ApiService
+  ){}
 
   ngOnInit(): void {
     this.updateTableData()
@@ -100,5 +107,11 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
     const pageNumber = event.pageIndex + 1
     this.pageNumber.emit(pageNumber)
     this.pageSize.emit(event.pageSize)
+  }
+
+  delete(contact:any){
+console.log(contact)
+    const contactId = contact._id
+    this.deleteContact.emit(contactId)
   }
 }

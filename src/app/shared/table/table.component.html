@@ -11,7 +11,15 @@
                     {{ displayedColumn | titlecase }}
                 </th>
                 <td mat-cell *matCellDef="let element">
+                    @if(displayedColumn == 'actions') {
+                    <button mat-raised-button color="primary" type="button" (click)="delete(element)"
+                        class="full-width">
+                        Delete
+                    </button>
+                    }
+                    @else {
                     {{ element[dataColumns[$index]]}}
+                    }
                 </td>
             </ng-container>
             }

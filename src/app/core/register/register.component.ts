@@ -57,7 +57,7 @@ export class RegisterComponent {
   }
 
   navigateToSigin(){
-    this._router.navigate(['register'])
+    this._router.navigate(['signin'])
   }
 
   openSnackBar(title: string){

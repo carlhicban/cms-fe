@@ -62,6 +62,15 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}${this.contactEndpoint}`,{headers})
   }
 
+  deleteContact(id:string): Observable<any>{
+    const token = localStorage.getItem('token')
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.delete(`${this.baseUrl}${this.contactEndpoint}/${id}`, {headers:headers})
+  }
+
   authenticateToken(token:string){
     localStorage.setItem('token',token)
     let tokenPayload = this._jwtService.decodeToken(token);
