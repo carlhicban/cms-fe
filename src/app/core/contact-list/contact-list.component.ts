@@ -155,4 +155,8 @@ export class ContactListComponent implements OnInit {
       duration: 2000
     });
   }
+
+  editContact(id:string){
+    this._router.navigate([`contacts/edit/${id}`])
+  }
 }

@@ -12,7 +12,10 @@
                 </th>
                 <td mat-cell *matCellDef="let element">
                     @if(displayedColumn == 'actions') {
-                    <button mat-raised-button color="primary" type="button" (click)="delete(element)"
+                    <button mat-raised-button color="primary" type="button" (click)="edit(element)" class="full-width">
+                        Edit
+                    </button>
+                    <button mat-raised-button color="secondary" type="button" (click)="delete(element)"
                         class="full-width">
                         Delete
                     </button>

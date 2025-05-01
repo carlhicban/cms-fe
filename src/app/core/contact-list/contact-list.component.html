@@ -33,5 +33,6 @@
 
     <app-table [tableDataColumns]="contactDataColumns" [tableDisplayColumns]="contactDisplayColumns"
         [tableData]="contactData" [totalData]="totalContactData" (pageNumber)="pageNumberChange($event)"
-        (pageSize)="pageSizeChange($event)" (deleteContact)="deleteContact($event)"></app-table>
+        (pageSize)="pageSizeChange($event)" (deleteContact)="deleteContact($event)"
+        (editContact)="editContact($event)"></app-table>
 </div>

@@ -10,5 +10,6 @@ export const routes: Routes = [
     { path: 'signin', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
     { path: 'contacts', component: ContactListComponent,  canActivate: [AuthGuard] },
-    { path: 'contacts/add', component: ContactFormComponent,  canActivate: [AuthGuard] }
+    { path: 'contacts/add', component: ContactFormComponent,  canActivate: [AuthGuard] },
+    { path: 'contacts/edit/:id', component: ContactFormComponent,  canActivate: [AuthGuard] }
 ];

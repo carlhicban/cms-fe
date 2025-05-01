@@ -30,6 +30,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   @Output() pageNumber = new EventEmitter<any>()
   @Output() pageSize = new EventEmitter<any>()
   @Output() deleteContact = new EventEmitter<any>()
+  @Output() editContact = new EventEmitter<any>()
   
   displayedColumns!: string[];
   subTitleDisplayedColumns!: string[];
@@ -110,8 +111,12 @@ export class TableComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   delete(contact:any){
-console.log(contact)
     const contactId = contact._id
     this.deleteContact.emit(contactId)
+  }
+
+  edit(contact:any){
+    const contactId = contact._id
+    this.editContact.emit(contactId)
   }
 }

@@ -70,7 +70,7 @@
                 <!-- Submit Button -->
                 <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid"
                     class="full-width">
-                    Add Contact
+                    {{isEdit ? 'Update Contact' : 'Add Contact'}}
                 </button>
             </form>
         </mat-card-content>
